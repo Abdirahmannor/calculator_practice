@@ -120,6 +120,20 @@ class _MyAppState extends State<MyApp> {
                               });
                             },
                           );
+                        }
+
+                        // Equal Button
+                        else if (buttons[index] == '=') {
+                          return MyButtons(
+                            buttonText: buttons[index],
+                            coolor: Color(0xff457b9d),
+                            textColor: Colors.white,
+                            clicked: () {
+                              setState(() {
+                                equalpressed();
+                              });
+                            },
+                          );
                         } else {
                           return MyButtons(
                               clicked: () {
@@ -151,5 +165,17 @@ class _MyAppState extends State<MyApp> {
     } else {
       return false;
     }
+  }
+
+  equalpressed() {
+    var finalanswer = userQuestion;
+    finalanswer = finalanswer.replaceAll('x', '*');
+
+    Parser p = Parser();
+    Expression exp = p.parse(finalanswer);
+    ContextModel cm = ContextModel();
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+    userAnswers = eval.toString();
   }
 }
